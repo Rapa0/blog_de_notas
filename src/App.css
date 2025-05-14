@@ -1,0 +1,43 @@
+/* Estilos generales */
+body {
+  font-family: "Poppins", sans-serif; /* Tipografía moderna */
+  background-color: #f8f9fa; /* Fondo claro */
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header con estilo moderno */
+.header {
+  background: linear-gradient(135deg, #4a90e2, #50b5e9);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Botones con efectos suaves */
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+/* Tarjetas de notas */
+.nota-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
