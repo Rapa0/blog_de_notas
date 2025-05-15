@@ -1,47 +1,25 @@
-import { useState, useEffect } from "react";
+// src/pages/Notas.tsx
+import React, { useState, useContext } from "react";
 import "./Notas.css";
 import NotaCard from "../componentes/NotaCard";
+import { NotasContext } from "../context/NotasContext";
 
-function Notas() {
-  const [notas, setNotas] = useState<{ id: number; titulo: string; contenido: string }[]>([]);
+const Notas: React.FC = () => {
+  const notasContext = useContext(NotasContext);
   const [titulo, setTitulo] = useState("");
   const [contenido, setContenido] = useState("");
-  const [editandoId, setEditandoId] = useState<number | null>(null);
 
-  useEffect(() => {
-    const notasGuardadas = localStorage.getItem("notas");
-    if (notasGuardadas) {
-      setNotas(JSON.parse(notasGuardadas));
-    }
-  }, []);
+  if (!notasContext) return null;
+  const { notas, agregarNota, eliminarNota, editarNota } = notasContext;
 
-  useEffect(() => {
-    localStorage.setItem("notas", JSON.stringify(notas));
-  }, [notas]);
-
-  const agregarNota = () => {
+  const handleAgregarNota = async () => {
     if (!titulo.trim() || !contenido.trim()) return;
-    const nuevaNota = { id: Date.now(), titulo, contenido };
-    setNotas([...notas, nuevaNota]);
-    setTitulo("");
-    setContenido("");
-  };
-
-  const eliminarNota = (id: number) => {
-    setNotas(notas.filter((nota) => nota.id !== id));
-  };
-
-  const iniciarEdicion = (id: number, tituloActual: string, contenidoActual: string) => {
-    setEditandoId(id);
-    setTitulo(tituloActual);
-    setContenido(contenidoActual);
-  };
-
-  const guardarEdicion = () => {
-    setNotas(notas.map((nota) =>
-      nota.id === editandoId ? { ...nota, titulo, contenido } : nota
-    ));
-    setEditandoId(null);
+    const nuevaNota = {
+      titulo,
+      contenido,
+      fechaCreacion: new Date().toISOString(),
+    };
+    await agregarNota(nuevaNota);
     setTitulo("");
     setContenido("");
   };
@@ -61,25 +39,31 @@ function Notas() {
           value={contenido}
           onChange={(e) => setContenido(e.target.value)}
         />
-        {editandoId ? (
-          <button onClick={guardarEdicion}>Guardar Cambios</button>
-        ) : (
-          <button onClick={agregarNota}>Agregar Nota</button>
-        )}
+        <button onClick={handleAgregarNota}>Agregar Nota</button>
       </div>
-
+      {/* Versión sin drag & drop */}
       <div className="notas-grid">
         {notas.map((nota) => (
           <NotaCard
             key={nota.id}
             nota={nota}
-            onEdit={() => iniciarEdicion(nota.id, nota.titulo, nota.contenido)}
-            onDelete={() => eliminarNota(nota.id)}
+            onEdit={(updated) => {
+              console.log("onEdit callback received:", updated);
+              editarNota(nota.id, {
+                titulo: updated.titulo,
+                contenido: updated.contenido,
+                fechaCreacion: nota.fechaCreacion,
+              });
+            }}
+            onDelete={() => {
+              console.log("onDelete callback received for id:", nota.id);
+              eliminarNota(nota.id);
+            }}
           />
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default Notas;

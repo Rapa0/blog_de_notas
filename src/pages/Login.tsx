@@ -1,45 +1,70 @@
+// src/pages/Login.tsx
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import bcrypt from "bcryptjs";
-import "./Login.css";
+import { Link } from "react-router-dom";
+import "./Auth.css";
 
-function Login() {
-  const [username, setUsername] = useState("");
+export default function Login() {
+  const { login } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const auth = useContext(AuthContext);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  if (auth?.user) {
-    navigate("/notas");
-    return null;  //  Evita renderizar la página de login
-  }
+  // Validación simple del formato del email
+  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
-  const handleLogin = () => {
-    const usuarios: { username: string; password: string }[] = JSON.parse(localStorage.getItem("usuarios") || "[]");
-    const usuarioEncontrado = usuarios.find((u) => u.username === username);
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrorMsg("");
 
-    if (!usuarioEncontrado || !bcrypt.compareSync(password, usuarioEncontrado.password)) {
-      setError("Credenciales incorrectas. Intenta nuevamente.");
+    if (!email || !isValidEmail(email)) {
+      setErrorMsg("Por favor, ingresa un email válido.");
       return;
     }
 
-    auth?.login(username);
-    setError("");
-    navigate("/notas");
+    if (!password) {
+      setErrorMsg("Debes ingresar la contraseña.");
+      return;
+    }
+
+    try {
+      await login(email, password);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Error al iniciar sesión. Verifica tus credenciales.";
+      setErrorMsg(message);
+      console.error("Error en handleLogin:", error);
+    }
   };
 
   return (
-    <div className="login-container">
-      <h2>Iniciar sesión</h2>
-      {error && <p className="error-message">{error}</p>}
-      <input type="text" placeholder="Usuario" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Ingresar</button>
-      <p>¿No tienes cuenta? <button onClick={() => navigate("/registro")}>Regístrate aquí</button></p>
+    <div className="auth-container">
+      <h2>Iniciar Sesión</h2>
+      {errorMsg && <p className="error">{errorMsg}</p>}
+      <form className="auth-form" onSubmit={handleLogin}>
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Entrar</button>
+      </form>
+      <div className="auth-link">
+        <p>
+          ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link>
+        </p>
+      </div>
     </div>
   );
 }
-
-export default Login;

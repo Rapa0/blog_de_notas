@@ -1,43 +1,87 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import bcrypt from "bcryptjs";
-import "./Registro.css";
+// src/pages/Registro.tsx
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import "./Auth.css";
 
-function Registro() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+export default function Registro() {
+  const { register, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleRegistro = () => {
-    const usuarios: { username: string; password: string }[] = JSON.parse(localStorage.getItem("usuarios") || "[]");
+  // Validación simple del email
+  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
-    const usuarioExistente = usuarios.find((u) => u.username === username);
-    if (usuarioExistente) {
-      setError("El usuario ya existe. Intenta con otro nombre.");
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrorMsg("");
+
+    if (!email || !isValidEmail(email)) {
+      setErrorMsg("Por favor, ingresa un email válido.");
       return;
     }
 
-    // Cifrar la contraseña antes de guardarla
-    const salt = bcrypt.genSaltSync(10);
-    const hashPassword = bcrypt.hashSync(password, salt);
+    if (!password || password.length < 6) {
+      setErrorMsg("La contraseña debe tener al menos 6 caracteres.");
+      return;
+    }
 
-    usuarios.push({ username, password: hashPassword });
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    if (password !== confirmPassword) {
+      setErrorMsg("Las contraseñas no coinciden.");
+      return;
+    }
 
-    alert("Registro exitoso. Ahora puedes iniciar sesión.");
-    navigate("/login");
+    try {
+      // Registra al usuario (esto también lo loguea automáticamente)
+      await register(email, password);
+      // Cierra la sesión para que el usuario no quede autenticado
+      await logout();
+      // Redirige al usuario a la página de inicio (Home)
+      navigate("/");
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Error al registrar.";
+      setErrorMsg(message);
+      console.error("Error en registro:", error);
+    }
   };
 
   return (
-    <div className="registro-container">
+    <div className="auth-container">
       <h2>Registro</h2>
-      {error && <p className="error-message">{error}</p>}
-      <input type="text" placeholder="Nuevo usuario" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <input type="password" placeholder="Nueva contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleRegistro}>Registrarse</button>
+      {errorMsg && <p className="error">{errorMsg}</p>}
+      <form className="auth-form" onSubmit={handleRegister}>
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Confirmar Contraseña"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Registrar</button>
+      </form>
+      <div className="auth-link">
+        <p>
+          ¿Ya tienes cuenta? <Link to="/login">Inicia sesión aquí</Link>
+        </p>
+      </div>
     </div>
   );
 }
-
-export default Registro;

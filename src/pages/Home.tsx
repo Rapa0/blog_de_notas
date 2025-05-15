@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
+import "./Home.css"; // Verifica que la ruta sea correcta
 
 function Home() {
   return (
-    <div>
+    <div className="home-container">
       <h1>Página de Inicio</h1>
-      <Link to="/login">
-        <button>Ir a Login</button>
-      </Link>
-      <Link to="/notas">
-        <button>Ver Notas</button>
-      </Link>
+      <div className="button-group">
+        <Link to="/login">Ir a Login</Link>
+        <Link to="/notas">Ver Notas</Link>
+      </div>
     </div>
   );
 }

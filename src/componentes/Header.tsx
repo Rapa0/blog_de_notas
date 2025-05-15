@@ -1,27 +1,34 @@
-import { Link } from "react-router-dom";
+// src/componentes/Header.tsx
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 import "./Header.css";
 
-function Header() {
-  const auth = useContext(AuthContext);
+export default function Header() {
+  const { user, logout } = useContext(AuthContext);
 
   return (
-    <nav className="header">
-      <h1>Blog de Notas</h1>
-      <div className="nav-links">
-        <Link to="/">Inicio</Link>
-        <Link to="/notas">Notas</Link>
-        {!auth?.user && <Link to="/login">Login</Link>} {/* Solo aparece si NO hay usuario */}
-        {auth?.user && (
-          <>
-            <p>Bienvenido, {auth.user}!</p>
-            <button onClick={auth.logout} className="logout-button">Cerrar sesión</button>
-          </>
+    <header className="header">
+      <div className="header-content">
+        <div className="logo-container">
+          {/* El logo se muestra como texto plano */}
+          <h1 className="logo">Mi Aplicación</h1>
+          {/* Botón para ir al inicio */}
+          <Link to="/" className="home-btn">
+            Inicio
+          </Link>
+        </div>
+        {user ? (
+          <div className="auth-info">
+            <p className="user-email">Bienvenido, {user.email}</p>
+            <button className="logout-btn" onClick={logout}>
+              Cerrar sesión
+            </button>
+          </div>
+        ) : (
+          <p className="no-user">No hay usuario autenticado</p>
         )}
       </div>
-    </nav>
+    </header>
   );
 }
-
-export default Header;

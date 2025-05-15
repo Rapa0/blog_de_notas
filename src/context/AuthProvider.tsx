@@ -1,30 +1,52 @@
+// src/context/AuthProvider.tsx
 import { useState, useEffect } from "react";
+import { 
+  getAuth, 
+  onAuthStateChanged, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  createUserWithEmailAndPassword 
+} from "firebase/auth";
 import { AuthContext } from "./AuthContext";
-import type { ReactNode } from "react";
+import type { User } from "firebase/auth";
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<string | null>(null);
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
 
-    useEffect(() => {
-        const usuarioGuardado = localStorage.getItem("usuarioAutenticado");
-        setUser(usuarioGuardado);
-}, []);
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+      if (u) console.log(`✅ Usuario autenticado: ${u.uid}`);
+      else console.warn("⚠️ No hay usuario autenticado.");
+    });
+    return () => unsubscribe();
+  }, []);
 
-    const login = (username: string) => {  
-        localStorage.setItem("usuarioAutenticado", username);
-        setUser(username);  // Guarda el usuario globalmente en `AuthContext`
+  const login = async (email: string, password: string) => {
+    const auth = getAuth();
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    setUser(userCredential.user);
+    console.log(`✅ Sesión iniciada: ${userCredential.user.uid}`);
+  };
 
-};
+  const logout = async () => {
+    const auth = getAuth();
+    await signOut(auth);
+    setUser(null);
+    console.log("✅ Sesión cerrada.");
+  };
 
-    const logout = () => {
-        localStorage.removeItem("usuarioAutenticado");
-        setUser(null); // Borra el usuario cuando se cierra sesión
+  const register = async (email: string, password: string) => {
+    const auth = getAuth();
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    setUser(userCredential.user);
+    console.log(`✅ Usuario registrado: ${userCredential.user.uid}`);
+  };
 
-};
-
-return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-        {children}
+  return (
+    <AuthContext.Provider value={{ user, login, logout, register }}>
+      {children}
     </AuthContext.Provider>
-);
+  );
 }
