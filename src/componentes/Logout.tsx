@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import "./Header.css"; // Usamos los mismos estilos del Header
+import "./Header.css"; 
 
 export default function Logout() {
-  const { logout } = useContext(AuthContext);
+    const { logout } = useContext(AuthContext);
 
-  return (
+return (
     <button className="logout-btn" onClick={logout}>
-      Cerrar sesión
+        Cerrar sesión
     </button>
-  );
+);
 }
