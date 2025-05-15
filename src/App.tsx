@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import { NotasProvider } from "./context/NotasProvider";
-import Header from "./componentes/Header"; 
+import Header from "./componentes/Header";
 import Home from "./pages/Home";
 import Notas from "./pages/Notas";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
+import ForgotPassword from "./pages/ForgotPassword";  // Nuevo import
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import type { JSX } from "react";
@@ -35,6 +36,15 @@ function App() {
               }
             />
             <Route path="/registro" element={<Registro />} />
+            {/* Nueva ruta para recuperar contraseñas mediante pregunta secreta */}
+            <Route
+              path="/forgot-password"
+              element={
+                <PublicRoute>
+                  <ForgotPassword />
+                </PublicRoute>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </NotasProvider>

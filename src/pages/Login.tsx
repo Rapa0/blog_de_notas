@@ -9,7 +9,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Validación simple del formato del email
   const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,12 +28,11 @@ export default function Login() {
     try {
       await login(email, password);
     } catch (error: unknown) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "Error al iniciar sesión. Verifica tus credenciales.";
-      setErrorMsg(message);
-      console.error("Error en handleLogin:", error);
+      if (error instanceof Error) {
+        setErrorMsg(error.message);
+      } else {
+        setErrorMsg("Error desconocido al iniciar sesión.");
+      }
     }
   };
 
@@ -62,6 +60,10 @@ export default function Login() {
       <div className="auth-link">
         <p>
           ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link>
+        </p>
+        {/* Aquí agregamos el enlace para recuperar la contraseña */}
+        <p>
+          <Link to="/forgot-password">Olvidé mi contraseña</Link>
         </p>
       </div>
     </div>
