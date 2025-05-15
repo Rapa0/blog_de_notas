@@ -1,4 +1,3 @@
-// src/componentes/NotaCard.tsx
 import React, { useState } from "react";
 import "./NotaCard.css";
 

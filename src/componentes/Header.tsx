@@ -11,7 +11,7 @@ export default function Header() {
       <div className="header-content">
         <div className="logo-container">
           {/* El logo se muestra como texto plano */}
-          <h1 className="logo">Mi Aplicación</h1>
+          <h1 className="logo">Blog de Notas 9000</h1>
           {/* Botón para ir al inicio */}
           <Link to="/" className="home-btn">
             Inicio
@@ -25,7 +25,7 @@ export default function Header() {
             </button>
           </div>
         ) : (
-          <p className="no-user">No hay usuario autenticado</p>
+          <p className="no-user">No estas logeado, prueba logearte</p>
         )}
       </div>
     </header>
