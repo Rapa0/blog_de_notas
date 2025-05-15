@@ -1,44 +1,41 @@
-/* src/pages/Home.css */
-
-/* Contenedor principal */
 .home-container {
-    text-align: center;
-    padding: 40px;
-    max-width: 800px;
-    margin: auto;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  /* Título */
-  .home-container h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  /* Contenedor de botones */
-  .home-container .button-group {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  /* Estilos de los botones */
-  .home-container .button-group a {
-    display: inline-block;
-    padding: 14px 24px;
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: #007bff; /* 🔹 Azul principal */
-    text-decoration: none;
-    border-radius: 8px;
-    border: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .home-container .button-group a:hover {
-    background-color: #0056b3; /* 🔹 Azul más oscuro en hover */
-    transform: scale(1.05);
-  }
+  text-align: center;
+  padding: 40px;
+  max-width: 800px;
+  margin: auto;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Título */
+.home-container h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Contenedor de botones */
+.home-container .button-group {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Estilos de los botones */
+.home-container .button-group a {
+  display: inline-block;
+  padding: 14px 24px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #007bff; /* 🔹 Azul principal */
+  text-decoration: none;
+  border-radius: 8px;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.home-container .button-group a:hover {
+  background-color: #0056b3; /* 🔹 Azul más oscuro en hover */
+  transform: scale(1.05);
+}

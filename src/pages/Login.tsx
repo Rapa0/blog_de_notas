@@ -1,4 +1,3 @@
-// src/pages/Login.tsx
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";

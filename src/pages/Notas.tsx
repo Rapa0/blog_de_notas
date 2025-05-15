@@ -1,4 +1,3 @@
-// src/pages/Notas.tsx
 import React, { useState, useContext } from "react";
 import "./Notas.css";
 import NotaCard from "../componentes/NotaCard";
