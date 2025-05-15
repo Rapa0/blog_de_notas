@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Notas from "./pages/Notas";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
-import ForgotPassword from "./pages/ForgotPassword";  // Nuevo import
+import ForgotPassword from "./pages/ForgotPassword"; 
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import type { JSX } from "react";
