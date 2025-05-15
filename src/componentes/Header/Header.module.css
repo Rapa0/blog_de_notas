@@ -1,0 +1,77 @@
+:root {
+    --primary-color: #1c73d7;
+    --secondary-color: #0a4d6e;
+    --text-color: #ffffff;
+    --bg-color: #f8f9fa;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-color);
+    padding: 20px 30px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo {
+    font-family: "Poppins", sans-serif;
+    font-size: 2rem;
+}
+.home-btn {
+    display: inline-block;             /* Permite aplicar padding y margin correctamente */
+    font-size: 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    margin-top: 5px;
+    padding: 6px 12px;                 /* Añade espacio interno para que el enlace se vea más equilibrado */
+    background-color: rgba(255, 255, 255, 0.2);  /* Fondo sutil, puedes ajustar la opacidad o color según prefieras */
+    border-radius: 5px;                /* Bordes redondeados para un look más moderno */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transición suave al hover */
+}
+    .home-btn:hover {
+        background-color: rgba(255, 255, 255, 0.4); /* Cambia el fondo al pasar el mouse */
+        transform: scale(1.05);                    /* Efecto de aumento al pasar el mouse */
+    }
+  .auth-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .user-email {
+    font-size: 1rem;
+  }
+  
+  .logout-btn {
+    background-color: #ffffff;
+    color: var(--primary-color);
+    border: none;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .logout-btn:hover {
+    background-color: #eaeaea;
+    transform: scale(1.05);
+  }
+  
+  .no-user {
+    font-size: 1rem;
+    font-style: italic;
+  }
