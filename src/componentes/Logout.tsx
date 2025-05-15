@@ -1,9 +1,13 @@
-function Logout({ onLogout }: { onLogout: () => void }) {
-    const handleLogout = () => {
-        localStorage.removeItem("user");
-        onLogout();
-    };
-    return <button onClick={handleLogout}>Cerrar sesión</button>;
-}
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import "./Header.css"; // Usamos los mismos estilos del Header
 
-export default Logout;
+export default function Logout() {
+  const { logout } = useContext(AuthContext);
+
+  return (
+    <button className="logout-btn" onClick={logout}>
+      Cerrar sesión
+    </button>
+  );
+}

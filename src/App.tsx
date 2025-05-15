@@ -36,7 +36,6 @@ function App() {
               }
             />
             <Route path="/registro" element={<Registro />} />
-            {/* Nueva ruta para recuperar contraseñas mediante pregunta secreta */}
             <Route
               path="/forgot-password"
               element={
