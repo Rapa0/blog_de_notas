@@ -1,85 +1,65 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Popup.css";
 import type { Nota } from "../types/Nota";
+import NotaPopupView from "./NotaPopupView";
+import NotaPopupEdit from "./NotaPopupEdit";
 
 interface PopupProps {
   nota: Nota;
   onClose: () => void;
-  onEdit: (updated: { titulo: string; contenido: string; fechaCreacion: string }) => void;
+  onEdit: (updated: {
+    titulo: string;
+    contenido: string;
+    fechaCreacion: string;
+  }) => void;
   onDelete: () => void;
-  onUpdateNote: (updated: Nota) => void; // Nueva prop para actualizar la nota seleccionada en tiempo real
+  onUpdateNote: (updated: Nota) => void;
 }
 
-const Popup: React.FC<PopupProps> = ({ nota, onClose, onEdit, onDelete, onUpdateNote }) => {
+const Popup: React.FC<PopupProps> = ({
+  nota,
+  onClose,
+  onEdit,
+  onDelete,
+  onUpdateNote,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [titulo, setTitulo] = useState(nota.titulo);
-  const [contenido, setContenido] = useState(nota.contenido);
 
-  // Sincroniza los campos cuando se actualiza la nota recibida
-  useEffect(() => {
-    setTitulo(nota.titulo);
-    setContenido(nota.contenido);
-  }, [nota]);
-
-  const handleSave = () => {
-    const updatedNota = {
+  const handleSave = (updated: {
+    titulo: string;
+    contenido: string;
+    fechaCreacion: string;
+  }) => {
+    onEdit(updated);
+    // Se actualiza la nota seleccionada de forma inmediata sin cerrar el Popup
+    onUpdateNote({
       ...nota,
-      titulo,
-      contenido,
-    };
-    onEdit({ titulo, contenido, fechaCreacion: nota.fechaCreacion });
-    onUpdateNote(updatedNota); // Actualiza la nota en el estado del Popup sin cerrarlo
+      titulo: updated.titulo,
+      contenido: updated.contenido,
+    });
     setIsEditing(false);
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    setTitulo(nota.titulo);
-    setContenido(nota.contenido);
-  };
-
-  const handleDelete = () => {
-    onDelete();
-    onClose();
   };
 
   return (
     <div className="popup-overlay" onClick={onClose}>
       <div className="popup-content" onClick={(e) => e.stopPropagation()}>
         {isEditing ? (
-          <>
-            <input
-              type="text"
-              value={titulo}
-              onChange={(e) => setTitulo(e.target.value)}
-              className="popup-input"
-            />
-            <textarea
-              value={contenido}
-              onChange={(e) => setContenido(e.target.value)}
-              className="popup-textarea"
-            />
-            <div className="button-group">
-              <button onClick={handleSave}>Guardar</button>
-              <button onClick={handleCancel}>Cancelar</button>
-              <button onClick={handleDelete} style={{ backgroundColor: "#e57373" }}>
-                Eliminar
-              </button>
-            </div>
-          </>
+          <NotaPopupEdit
+            nota={nota}
+            onSave={handleSave}
+            onCancel={handleCancel}
+            onDelete={onDelete}
+          />
         ) : (
-          <>
-            <h2 className="popup-title">
-              {nota.titulo.length > 30 ? nota.titulo.substring(0, 30) + "..." : nota.titulo}
-            </h2>
-            <div className="popup-view-text">
-              <p>{nota.contenido}</p>
-            </div>
-            <div className="button-group">
-              <button onClick={() => setIsEditing(true)}>Editar</button>
-              <button onClick={onClose}>Cerrar</button>
-            </div>
-          </>
+          <NotaPopupView
+            nota={nota}
+            onEditMode={() => setIsEditing(true)}
+            onClose={onClose}
+          />
         )}
       </div>
     </div>

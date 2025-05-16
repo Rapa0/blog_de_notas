@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import { NotasProvider } from "./context/NotasProvider";
-import Header from "./componentes/Header";
+import Header from "./componentes/Header/Header";
 import Home from "./pages/Home";
 import Notas from "./pages/Notas";
 import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import ForgotPassword from "./pages/ForgotPassword";
+import Albion from "./pages/Albion";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import type { JSX } from "react";
@@ -27,14 +28,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/login"
-              element={
-                <PublicRoute>
-                  <Login />
-                </PublicRoute>
-              }
-            />
+            {/* Se elimina el PublicRoute para /login */}
+            <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
             <Route
               path="/forgot-password"
@@ -42,6 +37,14 @@ function App() {
                 <PublicRoute>
                   <ForgotPassword />
                 </PublicRoute>
+              }
+            />
+            <Route
+              path="/albion"
+              element={
+                <ProtectedRoute>
+                  <Albion />
+                </ProtectedRoute>
               }
             />
           </Routes>
@@ -56,9 +59,9 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
   return user ? children : <Navigate to="/login" />;
 }
 
+// Puedes conservar o ajustar PublicRoute para otras rutas según convenga
 function PublicRoute({ children }: { children: JSX.Element }) {
-  const { user } = useContext(AuthContext);
-  return user ? <Navigate to="/notas" /> : children;
+  return children;
 }
 
 export default App;

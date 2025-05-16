@@ -1,14 +1,18 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
+import "./Home.css";
 
 export default function Login() {
-  const { login } = useContext(AuthContext);
+  const { login, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
+  // Validación simple del email
   const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,14 +31,32 @@ export default function Login() {
 
     try {
       await login(email, password);
+      // Después del login, el usuario permanece en esta vista para elegir la opción.
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setErrorMsg("Usuario no encontrado");
+        setErrorMsg("Credenciales incorrectas");
       } else {
         setErrorMsg("Error desconocido al iniciar sesión.");
       }
     }
   };
+
+  if (user) {
+    return (
+      <div className="home-container">
+        <h1>Bienvenido, {user.email}</h1>
+        <p>Elige una opción:</p>
+        <div className="button-group">
+          <a onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+            Volver al inicio
+          </a>
+          <a onClick={() => navigate("/notas")} style={{ cursor: "pointer" }}>
+            Ir a Notas
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="auth-container">
@@ -55,7 +77,7 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Entrar</button>
+        <button type="submit">Login</button>
       </form>
       <div className="auth-link">
         <p>

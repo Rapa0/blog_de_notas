@@ -1,0 +1,12 @@
+.albion-container {
+    width: 100%;
+    /* La altura se calcula como el 100% de la ventana menos el espacio reservado para el header (ajusta "100px" según corresponda) */
+    height: calc(100vh - 100px);
+    overflow: hidden;
+  }
+  
+  .albion-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }

@@ -17,16 +17,18 @@ const HeaderPresentation: React.FC<HeaderPresentationProps> = ({ user, onLogout 
             Inicio
           </Link>
         </div>
-        {user ? (
-          <div className={styles["auth-info"]}>
-            <p className={styles["user-email"]}>Bienvenido, {user.email}</p>
-            <button className={styles["logout-btn"]} onClick={onLogout}>
-              Cerrar Sesión
-            </button>
-          </div>
-        ) : (
-          <p className={styles["no-user"]}>No estás logeado, prueba logearte</p>
-        )}
+        <div className={styles["auth-info"]}>
+          {user ? (
+            <>
+              <p className={styles["user-email"]}>Bienvenido, {user.email}</p>
+              <button className={styles["logout-btn"]} onClick={onLogout}>
+                Cerrar Sesión
+              </button>
+            </>
+          ) : (
+            <p className={styles["no-user"]}>No estás logeado</p>
+          )}
+        </div>
       </div>
     </header>
   );
