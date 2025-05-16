@@ -29,7 +29,7 @@ export default function Login() {
       await login(email, password);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setErrorMsg(error.message);
+        setErrorMsg("Usuario no encontrado");
       } else {
         setErrorMsg("Error desconocido al iniciar sesión.");
       }
@@ -61,7 +61,6 @@ export default function Login() {
         <p>
           ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link>
         </p>
-        {/* Aquí agregamos el enlace para recuperar la contraseña */}
         <p>
           <Link to="/forgot-password">Olvidé mi contraseña</Link>
         </p>

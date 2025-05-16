@@ -8,12 +8,16 @@ import React, {
 import "./Notas.css";
 import NotaCard from "../componentes/NotaCard";
 import { NotasContext } from "../context/NotasContext";
+import Popup from "../componentes/Popup";
+import type { Nota } from "../types/Nota";
 
 const Notas: React.FC = () => {
   const { notas, agregarNota, eliminarNota, editarNota } = useContext(NotasContext)!;
-  
   const [titulo, setTitulo] = useState("");
   const [contenido, setContenido] = useState("");
+
+  // Estado para la nota seleccionada (para el popup)
+  const [notaSeleccionada, setNotaSeleccionada] = useState<Nota | null>(null);
 
   const handleAgregarNota = useCallback(async () => {
     if (!titulo.trim() || !contenido.trim()) return;
@@ -27,6 +31,7 @@ const Notas: React.FC = () => {
     setContenido("");
   }, [titulo, contenido, agregarNota]);
 
+  // Callback para editar la nota en el backend
   const handleEdit = useCallback(
     (id: string, fechaCreacion: string) => {
       return (updated: { titulo: string; contenido: string }) => {
@@ -40,6 +45,7 @@ const Notas: React.FC = () => {
     [editarNota]
   );
 
+  // Callback para eliminar la nota
   const handleDelete = useCallback(
     (id: string) => {
       return () => {
@@ -49,30 +55,25 @@ const Notas: React.FC = () => {
     [eliminarNota]
   );
 
-  const renderedNotas = useMemo(() => (
-    notas.map((nota) => (
-      <NotaCard
-        key={nota.id}
-        nota={nota}
-        onEdit={handleEdit(nota.id, nota.fechaCreacion)}
-        onDelete={handleDelete(nota.id)}
-      />
-    ))
-  ), [notas, handleEdit, handleDelete]);
-
-  const handleTituloChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setTitulo(e.target.value);
-    },
-    []
+  const renderedNotas = useMemo(
+    () =>
+      notas.map((nota) => (
+        <NotaCard
+          key={nota.id}
+          nota={nota}
+          onSelect={(nota) => setNotaSeleccionada(nota)}
+        />
+      )),
+    [notas]
   );
 
-  const handleContenidoChange = useCallback(
-    (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setContenido(e.target.value);
-    },
-    []
-  );
+  const handleTituloChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setTitulo(e.target.value);
+  }, []);
+
+  const handleContenidoChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+    setContenido(e.target.value);
+  }, []);
 
   return (
     <div className="notas-container">
@@ -92,6 +93,16 @@ const Notas: React.FC = () => {
         <button onClick={handleAgregarNota}>Agregar Nota</button>
       </div>
       <div className="notas-grid">{renderedNotas}</div>
+
+      {notaSeleccionada && (
+        <Popup
+          nota={notaSeleccionada}
+          onClose={() => setNotaSeleccionada(null)}
+          onEdit={handleEdit(notaSeleccionada.id, notaSeleccionada.fechaCreacion)}
+          onDelete={handleDelete(notaSeleccionada.id)}
+          onUpdateNote={(updatedNota) => setNotaSeleccionada(updatedNota)}
+        />
+      )}
     </div>
   );
 };
