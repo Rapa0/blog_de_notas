@@ -28,7 +28,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/* Se elimina el PublicRoute para /login */}
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
             <Route
@@ -59,7 +58,6 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
   return user ? children : <Navigate to="/login" />;
 }
 
-// Puedes conservar o ajustar PublicRoute para otras rutas según convenga
 function PublicRoute({ children }: { children: JSX.Element }) {
   return children;
 }

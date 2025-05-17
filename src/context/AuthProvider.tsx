@@ -16,8 +16,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       setUser(u);
-      if (u) console.log(`✅ Usuario autenticado: ${u.uid}`);
-      else console.warn("⚠️ No hay usuario autenticado.");
+      if (u) console.log(` Usuario autenticado: ${u.uid}`);
+      else console.warn(" No hay usuario autenticado.");
     });
     return () => unsubscribe();
   }, []);
@@ -26,21 +26,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const auth = getAuth();
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     setUser(userCredential.user);
-    console.log(`✅ Sesión iniciada: ${userCredential.user.uid}`);
+    console.log(` Sesión iniciada: ${userCredential.user.uid}`);
   };
 
   const logout = async () => {
     const auth = getAuth();
     await signOut(auth);
     setUser(null);
-    console.log("✅ Sesión cerrada.");
+    console.log(" Sesión cerrada.");
   };
 
   const register = async (email: string, password: string) => {
     const auth = getAuth();
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     setUser(userCredential.user);
-    console.log(`✅ Usuario registrado: ${userCredential.user.uid}`);
+    console.log(` Usuario registrado: ${userCredential.user.uid}`);
   };
 
   return (
