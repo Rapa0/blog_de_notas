@@ -1,7 +1,12 @@
-/* Contenedor principal */
+/* ===================================
+   Estilos Base (Modo Claro)
+===================================*/
+
+/* Contenedor principal (Área de Notas ampliada) */
 .notas-container {
-  padding: 20px;
-  max-width: 800px;
+  padding: 30px;
+  max-width: 1000px; /* Ancho ampliado a 1000px */
+  width: 90%;
   margin: auto;
   font-family: 'Poppins', sans-serif;
   text-align: center;
@@ -9,7 +14,7 @@
   border-radius: 8px;
 }
 
-/* Título principal */
+/* Título principal ("Mis Notas") */
 .notas-container h2 {
   margin-bottom: 20px;
   color: #333;
@@ -19,12 +24,11 @@
 .form-container {
   background: #fff;
   padding: 16px;
-  margin: 0 auto 20px auto; /* Centrado y separación inferior */
+  margin: 0 auto 20px auto;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   max-width: 350px;
 }
-
 .form-container input,
 .form-container textarea {
   width: 100%;
@@ -35,14 +39,12 @@
   font-size: 1rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
 .form-container input:focus,
 .form-container textarea:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
+  box-shadow: 0 0 4px rgba(0,123,255,0.2);
 }
-
 .form-container button {
   width: 100%;
   padding: 10px;
@@ -54,12 +56,18 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .form-container button:hover {
   background-color: #0056b3;
 }
 
-/* Estilo para la grilla de notas */
+/* Área de contenido de las notas */
+.notas-content {
+  width: 100%;
+  min-height: 600px;
+  padding: 20px;
+}
+
+/* Grilla de notas */
 .notas-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -69,35 +77,26 @@
 
 /* -----------------------------------
          Estilos para NotaCard
--------------------------------------*/
-
-/* Contenedor de la nota  
-   (Las notas mantendrán su altura original: 250px) */
+-----------------------------------*/
 .nota-card-inner {
   background: #fff;
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  height: 250px; /* Mantiene el tamaño */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  height: 250px;
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-/* Animación al pasar el mouse (efecto sutil de elevación) */
 .nota-card-inner:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
-
-/* Modo edición: cuando la nota se encuentre en modo edición (agrega la clase "edit-mode" en el componente) */
 .nota-card-inner.edit-mode {
-  background: #f8faff;           /* Fondo ligeramente azul */
+  background: #f8faff;
   border: 1px solid #007bff;
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 4px 8px rgba(0,123,255,0.3);
 }
-
-/* Título de la nota (sin cambios importantes respecto a tu CSS) */
 .nota-card-inner h3 {
   font-size: 1.3rem;
   font-weight: bold;
@@ -106,29 +105,25 @@
   word-break: break-word;
   max-width: 100%;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limita a 2 líneas */
-  line-clamp: 2;         /* Propiedad estándar */
+  -webkit-line-clamp: 2;
+          line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* Contenido de la nota */
 .nota-card-inner p {
   flex-grow: 1;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 4; /* Limita a 4 líneas */
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
-  line-clamp: 4;         /* Propiedad estándar */
+          line-clamp: 4;
   overflow-wrap: break-word;
   word-break: break-word;
   font-size: 1rem;
   color: #444;
   margin: 0;
 }
-
-/* Estilos para los campos de edición cuando la nota está en modo edición */
 .nota-card-inner.edit-mode input,
 .nota-card-inner.edit-mode textarea {
   width: 100%;
@@ -139,4 +134,172 @@
   border-radius: 4px;
   background: #fff;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ===================================
+   Estilo "Notas Clasicas" (Paper Mode)
+   Aplica cuando el contenedor principal tiene la clase "notas-paper"
+===================================*/
+
+/* En modo claro, Paper Mode: fondo degradado y patrón de líneas (negro muy sutil) */
+.notas-container.notas-paper .nota-card-inner,
+.notas-container.notas-paper .form-container,
+.notas-container.notas-paper .popup-content {
+  background: linear-gradient(to bottom, #ffffff, #f7f3e9);
+  border: 1px solid #dcd7b8;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 9px,
+    rgba(0,0,0,0.03) 9px,
+    rgba(0,0,0,0.03) 10px
+  );
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  font-family: Georgia, "Times New Roman", serif;
+  color: #333;
+  opacity: 1 !important;
+}
+
+/* En modo oscuro, Paper Mode: forzamos fondo claro y cambia el patrón para usar líneas blancas */
+.notas-container.estilo-oscuro.notas-paper .nota-card-inner,
+.notas-container.estilo-oscuro.notas-paper .form-container,
+.notas-container.estilo-oscuro.notas-paper .popup-content {
+  background: linear-gradient(to bottom, #ffffff, #f7f3e9) !important;
+  border: 1px solid #dcd7b8 !important;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 9px,
+    rgba(255,255,255,0.1) 9px,
+    rgba(255,255,255,0.1) 10px
+  ) !important;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1) !important;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #333 !important;
+  opacity: 1 !important;
+}
+
+/* ===================================
+   Menú Lateral (ThemeMenu)
+===================================*/
+.notas-sidebar {
+  position: fixed;
+  top: 150px;
+  left: 10px; /* Más a la izquierda */
+  width: 220px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  z-index: 1000;
+}
+.menu-button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+.menu-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* ===================================
+   Modo Oscuro (Aplicado Globalmente)
+===================================*/
+.notas-container.estilo-oscuro {
+  background: #333;
+  color: #f9f9f9;
+}
+.notas-container.estilo-oscuro h2 {
+  color: #ffffff;
+}
+.notas-container.estilo-oscuro .form-container {
+  background: #444;
+  box-shadow: 0 2px 6px rgba(255,255,255,0.1);
+}
+.notas-container.estilo-oscuro .form-container input,
+.notas-container.estilo-oscuro .form-container textarea {
+  background: #555;
+  border: 1px solid #666;
+  color: #f9f9f9;
+}
+.notas-container.estilo-oscuro .form-container button {
+  background-color: #0056b3;
+}
+.notas-container.estilo-oscuro .nota-card-inner {
+  background: #444;
+  color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(255,255,255,0.1);
+}
+.notas-container.estilo-oscuro .nota-card-inner h3,
+.notas-container.estilo-oscuro .nota-card-inner p {
+  color: #f9f9f9;
+}
+.notas-container.estilo-oscuro .notas-sidebar {
+  background: #444;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.1);
+}
+.notas-container.estilo-oscuro .menu-button {
+  background-color: #0056b3;
+  color: #f9f9f9;
+}
+.notas-container.estilo-oscuro .menu-button:hover {
+  background-color: #003d80;
+}
+.notas-container.estilo-oscuro .button-group button {
+  background: #0056b3;
+  color: #f9f9f9;
+}
+.notas-container.estilo-oscuro .button-group button:hover {
+  background: #003d80;
+}
+.notas-container.estilo-oscuro .button-group button:last-child {
+  background: #a71d2a;
+}
+.notas-container.estilo-oscuro .button-group button:last-child:hover {
+  background: #7a131d;
+}
+
+/* ===================================
+   Modo Futurista
+   Se activa cuando el contenedor principal tiene la clase "futuristic"
+===================================*/
+.notas-container.futuristic {
+  /* Fondo futurista con un radial gradient que da aire tecnológico */
+  background: radial-gradient(circle at center, #000, #111);
+  color: #0ff;
+}
+.notas-container.futuristic h2 {
+  color: #0ff;
+}
+.notas-container.futuristic .nota-card-inner {
+  background: linear-gradient(135deg, #001f3f, #0074D9) !important;
+  border: 2px solid #0ff !important;
+  box-shadow: 0 0 15px rgba(0,255,255,0.7) !important;
+  font-family: 'Orbitron', sans-serif;
+  color: #fff !important;
+}
+.notas-container.futuristic .nota-card-inner h3,
+.notas-container.futuristic .nota-card-inner p {
+  color: #fff !important;
+}
+.notas-container.futuristic .popup-content {
+  background: linear-gradient(135deg, #001f3f, #0074D9) !important;
+  border: 2px solid #0ff !important;
+  box-shadow: 0 0 15px rgba(0,255,255,0.7) !important;
+  font-family: 'Orbitron', sans-serif;
+  color: #fff !important;
+}
+
+.notas-container.futuristic .popup-content .popup-view-text,
+.notas-container.futuristic .popup-content .popup-view-text p {
+  color: #fff !important;
 }

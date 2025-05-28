@@ -1,3 +1,4 @@
+// src/componentes/NotaPopupView.tsx
 import React from "react";
 import { truncateText } from "../utils/textHelpers";
 import "./Popup.css";
@@ -11,10 +12,9 @@ interface NotaPopupViewProps {
 
 const NotaPopupView: React.FC<NotaPopupViewProps> = ({ nota, onEditMode, onClose }) => {
   return (
-    <>
-      <h2 className="popup-title">
-        {truncateText(nota.titulo, 30)}
-      </h2>
+    <div className="popup-content">
+      {/* Ahora se limita a 15 caracteres */}
+      <h2 className="popup-title">{truncateText(nota.titulo, 15)}</h2>
       <div className="popup-view-text">
         <p>{nota.contenido}</p>
       </div>
@@ -22,7 +22,7 @@ const NotaPopupView: React.FC<NotaPopupViewProps> = ({ nota, onEditMode, onClose
         <button onClick={onEditMode}>Editar</button>
         <button onClick={onClose}>Cerrar</button>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,17 +1,30 @@
-import React, { useState, useContext, useMemo, useCallback, type ChangeEvent } from "react";
+// src/pages/Notas.tsx
+import React, {
+  useState,
+  useContext,
+  useMemo,
+  useCallback,
+  type ChangeEvent,
+} from "react";
 import "./Notas.css";
-import NotaCard from "../componentes/NotaCard"; 
-import Popup from "../componentes/Popup";         
+import NotaCard from "../componentes/NotaCard";
+import Popup from "../componentes/Popup";
+import ThemeMenu from "../componentes/ThemeMenu";
 import { NotasContext } from "../context/NotasContext";
 import type { Nota } from "../types/Nota";
 
 const Notas: React.FC = () => {
-  const { notas, agregarNota, eliminarNota, editarNota } = useContext(NotasContext)!;
+  const { notas, agregarNota, eliminarNota, editarNota } =
+    useContext(NotasContext)!;
   const [titulo, setTitulo] = useState("");
   const [contenido, setContenido] = useState("");
-  
-  // Estado para la nota seleccionada (para el Popup)
   const [notaSeleccionada, setNotaSeleccionada] = useState<Nota | null>(null);
+
+  // Estado para el tema claro/oscuro
+  const [notesStyle, setNotesStyle] = useState<string>("estilo-claro");
+  // Nuevo estado para elegir entre "modern", "classic" y "futuristic".
+  // Por default, es "modern".
+  const [styleMode, setStyleMode] = useState<string>("modern");
 
   const handleAgregarNota = useCallback(async () => {
     if (!titulo.trim() || !contenido.trim()) return;
@@ -25,31 +38,25 @@ const Notas: React.FC = () => {
     setContenido("");
   }, [titulo, contenido, agregarNota]);
 
-  // Callback para editar la nota en el backend
   const handleEdit = useCallback(
-    (id: string, fechaCreacion: string) => {
-      return (updated: { titulo: string; contenido: string }) => {
+    (id: string, fechaCreacion: string) =>
+      (updated: { titulo: string; contenido: string }) => {
         editarNota(id, {
           titulo: updated.titulo,
           contenido: updated.contenido,
           fechaCreacion,
         });
-      };
-    },
+      },
     [editarNota]
   );
 
-  // Callback para eliminar la nota
   const handleDelete = useCallback(
-    (id: string) => {
-      return () => {
-        eliminarNota(id);
-      };
+    (id: string) => () => {
+      eliminarNota(id);
     },
     [eliminarNota]
   );
 
-  // Aquí definimos los tipos de los parámetros para evitar 'any'
   const renderedNotas = useMemo(
     () =>
       notas.map((nota) => (
@@ -62,37 +69,60 @@ const Notas: React.FC = () => {
     [notas]
   );
 
-  const handleTituloChange = useCallback((e: ChangeEvent<HTMLInputElement>) => setTitulo(e.target.value), []);
-  const handleContenidoChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => setContenido(e.target.value), []);
+  const handleTituloChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setTitulo(e.target.value),
+    []
+  );
+  const handleContenidoChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => setContenido(e.target.value),
+    []
+  );
+
+  // Se arma la clase del contenedor según el styleMode
+  const containerClass = `notas-container ${notesStyle} ${
+    styleMode === "classic" ? "notas-paper" : ""
+  } ${styleMode === "futuristic" ? "futuristic" : ""}`;
 
   return (
-    <div className="notas-container">
-      <h2>Mis Notas</h2>
-      <div className="form-container">
-        <input
-          type="text"
-          placeholder="Título"
-          value={titulo}
-          onChange={handleTituloChange}
-        />
-        <textarea
-          placeholder="Contenido"
-          value={contenido}
-          onChange={handleContenidoChange}
-        />
-        <button onClick={handleAgregarNota}>Agregar Nota</button>
+    <div className={containerClass}>
+      <ThemeMenu
+        notesStyle={notesStyle}
+        setNotesStyle={setNotesStyle}
+        styleMode={styleMode}
+        setStyleMode={setStyleMode}
+      />
+      <div className="notas-content">
+        <h2>Mis Notas</h2>
+        <div className="form-container">
+          <input
+            type="text"
+            placeholder="Título"
+            value={titulo}
+            onChange={handleTituloChange}
+          />
+          <textarea
+            placeholder="Contenido"
+            value={contenido}
+            onChange={handleContenidoChange}
+          />
+          <button onClick={handleAgregarNota}>Agregar Nota</button>
+        </div>
+        <div className="notas-grid">{renderedNotas}</div>
+        {notaSeleccionada && (
+          <Popup
+            nota={notaSeleccionada}
+            onClose={() => setNotaSeleccionada(null)}
+            onEdit={handleEdit(
+              notaSeleccionada.id,
+              notaSeleccionada.fechaCreacion
+            )}
+            onDelete={handleDelete(notaSeleccionada.id)}
+            onUpdateNote={(updatedNota: Nota) =>
+              setNotaSeleccionada(updatedNota)
+            }
+          />
+        )}
       </div>
-      <div className="notas-grid">{renderedNotas}</div>
-      
-      {notaSeleccionada && (
-        <Popup
-          nota={notaSeleccionada}
-          onClose={() => setNotaSeleccionada(null)}
-          onEdit={handleEdit(notaSeleccionada.id, notaSeleccionada.fechaCreacion)}
-          onDelete={handleDelete(notaSeleccionada.id)}
-          onUpdateNote={(updatedNota: Nota) => setNotaSeleccionada(updatedNota)}
-        />
-      )}
     </div>
   );
 };

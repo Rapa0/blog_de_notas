@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import "./Home.css"; // Utiliza tu CSS actual sin modificaciones
+import "./Home.css"; 
 
 const Home: React.FC = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    // Si el usuario está autenticado, se dirige a /albion; de lo contrario a /login
     navigate(user ? "/albion" : "/login");
   };
 

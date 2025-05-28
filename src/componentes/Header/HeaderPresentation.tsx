@@ -12,7 +12,7 @@ const HeaderPresentation: React.FC<HeaderPresentationProps> = ({ user, onLogout 
     <header className={styles.header}>
       <div className={styles["header-content"]}>
         <div className={styles["logo-container"]}>
-          <h1 className={styles.logo}>Blog de Notas 9000</h1>
+          <h1 className={styles.logo}>Bloc de Notas 9000</h1>
           <Link to="/" className={styles["home-btn"]}>
             Inicio
           </Link>

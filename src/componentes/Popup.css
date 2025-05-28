@@ -1,10 +1,14 @@
+/* ===================================
+   Estilos Base del Popup
+===================================*/
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  /* Overlay algo más opaco para mayor contraste */
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,21 +16,30 @@
 }
 
 .popup-content {
-  background: #ffffff;
+  margin: auto;
+  background-color: #ffffff !important; /* Fondo sólido en modo claro */
+  opacity: 1 !important;
   padding: 20px;
   border-radius: 8px;
   width: 400px;
   max-width: 90%;
-  overflow-x: hidden;
+  max-height: 90vh;             /* Aumentamos para mayor espacio vertical */
+  overflow-y: auto;
+  overflow-x: hidden;           /* Oculta cualquier desbordamiento horizontal */
+  white-space: normal;          /* Forzamos el wrapping de texto */
+  transition: background 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .popup-title {
   font-size: 1.5rem;
   font-weight: bold;
-  overflow: hidden;
+  margin: 0 auto 10px auto;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 100%;
+  color: #333;
+  text-align: center;
 }
 
 .popup-view-text {
@@ -35,6 +48,9 @@
   padding-right: 10px;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  white-space: normal; /* Permite que el texto se ajuste */
+  color: #444;
+  text-align: center;
 }
 
 .popup-input,
@@ -46,6 +62,9 @@
   border-radius: 4px;
   padding: 8px;
   box-sizing: border-box;
+  color: #333;
+  background: #fff;
+  white-space: normal;
 }
 
 .popup-textarea {
@@ -81,13 +100,94 @@
 .button-group button:last-child:hover {
   background: #c0392b;
 }
-.popup-content {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-  max-width: 90%;
-  max-height: 80vh; 
-  overflow-y: auto; 
-  overflow-x: hidden; 
+
+/* ===================================
+   Modo Oscuro para el Popup (Modernas)
+   Se aplican cuando el contenedor principal tiene la clase "estilo-oscuro"
+===================================*/
+.notas-container.estilo-oscuro .popup-content {
+  background-color: #444 !important;  /* Fondo sólido en modo oscuro */
+  opacity: 1 !important;
+  color: #f9f9f9;
+  border: 1px solid #666;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  white-space: normal;
+}
+
+.notas-container.estilo-oscuro .popup-title {
+  color: #f9f9f9 !important;
+  text-align: center;
+}
+
+.notas-container.estilo-oscuro .popup-view-text {
+  color: #f9f9f9 !important;
+  text-align: center;
+}
+
+.notas-container.estilo-oscuro .popup-input,
+.notas-container.estilo-oscuro .popup-textarea {
+  background: #555;
+  border: 1px solid #666;
+  color: #f9f9f9;
+  white-space: normal;
+}
+
+.notas-container.estilo-oscuro .button-group button {
+  background: #0056b3;
+  color: #f9f9f9;
+}
+
+.notas-container.estilo-oscuro .button-group button:hover {
+  background: #003d80;
+}
+
+.notas-container.estilo-oscuro .button-group button:last-child {
+  background: #a71d2a;
+}
+
+.notas-container.estilo-oscuro .button-group button:last-child:hover {
+  background: #7a131d;
+}
+
+/* ===================================
+   Paper Mode para el Popup
+   Se activan cuando el contenedor principal tiene la clase "notas-paper"
+===================================*/
+
+/* Paper Mode en modo claro para el Popup */
+.notas-container.notas-paper .popup-content {
+  background: linear-gradient(to bottom, #fcf8f2, #f9f1d2);
+  border: 1px solid #dcd7b8;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 9px,
+    rgba(0,0,0,0.03) 9px,
+    rgba(0,0,0,0.03) 10px
+  );
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  font-family: Georgia, "Times New Roman", serif;
+  color: #333;
+  opacity: 1 !important;
+  text-align: center;
+  white-space: normal;
+}
+
+.notas-container.estilo-oscuro.notas-paper .popup-content {
+  background: linear-gradient(to bottom, #2c2c2c, #333333) !important;
+  border: 1px solid #444 !important;
+  background-image: repeating-linear-gradient(
+    0deg,
+    #2c2c2c,
+    #2c2c2c 10px,
+    #383838 10px,
+    #383838 11px
+  ) !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #f9f9f9 !important;
+  opacity: 1 !important;
+  text-align: center;
+  white-space: normal;
 }
