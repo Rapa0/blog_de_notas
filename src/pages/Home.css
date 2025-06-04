@@ -1,18 +1,19 @@
 .home-container {
-  height: 100vh; /* Ocupa toda la altura de la ventana */
+  height: 75vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
   text-align: center;
   font-family: "Poppins", sans-serif;
-  color: white; /* Asegura que el texto sea legible sobre el fondo */
-  overflow: hidden; /* Evita que el contenido desborde */
-  background-image: url('/public/imagenes/azul.avif'); /* Ruta de la imagen */
-  background-size: cover; /* Asegura que la imagen cubra todo el contenedor */
-  background-position: center; /* Centra la imagen */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  color: white;
+  overflow: hidden;
+  background-image: url('/public/imagenes/azul.avif');
+  background-size: 100% auto;      /* Solo ajusta el ancho, no el alto */
+  background-position: top center; /* Empieza desde arriba */
+  background-repeat: no-repeat;    /* No repite la imagen */
+  padding-top: 80px;
 }
 
 .home-container::before {
@@ -63,3 +64,4 @@
   background-color: #0056b3; /* 🔹 Azul más oscuro en hover */
   transform: scale(1.05);
 }
+

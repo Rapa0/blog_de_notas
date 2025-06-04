@@ -1,23 +1,4 @@
-/* Estilos base para botones existentes */
-.menu-button {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 12px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  cursor: pointer;
-}
-
-.menu-button:hover {
-  background-color: #0056b3;
-  transform: translateY(-2px);
-}
-
-/* Estilos para el menú desplegable personalizado */
+/* Ejemplo (tal como lo tienes actualmente en ThemeMenu.css) */
 .menu-dropdown-wrapper {
   position: relative;
   width: 100%;
@@ -33,7 +14,6 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  /* Elimina la apariencia nativa */
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -43,7 +23,6 @@
   outline: none;
 }
 
-/* Pseudo-elemento para la flecha a la derecha */
 .menu-dropdown-wrapper::after {
   content: '▾';
   position: absolute;

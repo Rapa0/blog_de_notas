@@ -31,7 +31,7 @@ const ThemeMenu: React.FC<ThemeMenuProps> = ({
         <option value="classic">Notas Clásicas</option>
         <option value="futuristic">Notas Futuristas</option>
       </select>
-      <button className="menu-button">Botón 4</button>
+      {/* <button className="menu-button">Botón 4</button> */}
     </div>
   );
 };

@@ -1,4 +1,3 @@
-// src/componentes/NotaPopupView.tsx
 import React from "react";
 import { truncateText } from "../utils/textHelpers";
 import "./Popup.css";

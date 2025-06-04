@@ -151,7 +151,7 @@
 }
 
 /* ===================================
-   Paper Mode para el Popup
+   Paper Mode para el Popup (Clásicas)
    Se activan cuando el contenedor principal tiene la clase "notas-paper"
 ===================================*/
 
@@ -190,4 +190,52 @@
   opacity: 1 !important;
   text-align: center;
   white-space: normal;
+}
+
+/* ===================================
+   Futuristic Mode para el Popup (Futuristas)
+   (Se mantienen los estilos de fondo de Modernas, sin cambios de color)
+===================================*/
+
+/* ============================================================
+   Override Global para Agrandar el Popup y el Marco de Forma Proporcional
+   Se aplican en TODOS los modos (Modernas, Paper y Futuristic, claro y oscuro)
+   - Aumenta el ancho, el padding, el borde y la altura mínima.
+============================================================ */
+.popup-overlay .popup-content {
+  width: 480px !important;         /* Ancho aumentado de 400px a 480px */
+  padding: 40px !important;          /* Padding aumentado en todos los lados */
+  min-height: 60vh !important;       /* Altura mínima de 60% del viewport */
+  border-radius: 12px !important;    /* Bordes más redondos */
+  box-sizing: border-box !important;
+}
+
+/* Refuerzo de Bordes en Modos con Estilo */
+.notas-container.estilo-oscuro .popup-content {
+  border: 2px solid #666 !important;
+}
+
+.notas-container.notas-paper .popup-content {
+  border: 2px solid #dcd7b8 !important;
+}
+
+.notas-container.estilo-oscuro.notas-paper .popup-content {
+  border: 2px solid #444 !important;
+}
+
+/* ============================================================
+   Ajustes Globales para Mayor Legibilidad
+   - Se aumenta el tamaño de fuente de elementos clave en el popup.
+============================================================ */
+.popup-title {
+  font-size: 1.8rem !important;     /* Título un poco más grande */
+}
+
+.popup-view-text {
+  font-size: 1.2rem !important;     /* Texto de visualización más legible */
+}
+
+.popup-input,
+.popup-textarea {
+  font-size: 1.3rem !important;     /* Campos de entrada con letra mayor */
 }

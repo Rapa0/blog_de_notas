@@ -17,7 +17,7 @@ export default function PopupMenu({ setNotesStyle }: PopupMenuProps) {
   return (
     <div className="popup-container">
       <button className="popup-toggle" onClick={() => setIsOpen(!isOpen)}>
-        📋 Opciones
+          Opciones
       </button>
       {isOpen && (
         <div className="popup-menu">
@@ -28,7 +28,6 @@ export default function PopupMenu({ setNotesStyle }: PopupMenuProps) {
             <li onClick={() => handleStyleChange("estilo-oscuro")}>
               Estilo Oscuro
             </li>
-            {/* Puedes agregar más opciones según sea necesario */}
           </ul>
         </div>
       )}
